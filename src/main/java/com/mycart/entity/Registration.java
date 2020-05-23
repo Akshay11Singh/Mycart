@@ -3,11 +3,15 @@ package com.mycart.entity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.hibernate.annotations.Type;
 
 @Entity
 public class Registration {
@@ -15,27 +19,31 @@ public class Registration {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Id
 	int id;
-	@NotNull
+	@NotEmpty
 	String channelId;
 	@NotNull
 	Date timeStamp;
-	@NotNull
+	@NotEmpty
 	String serviceProvider;
-	@NotNull
+	@NotEmpty
 	String requestType;
-	@NotNull
+	@NotEmpty
 	String userType;
-	@NotNull
+	@NotEmpty
 	String birthDate;
-	@NotNull
+	@NotEmpty
 	String firstName;
-	@NotNull
+	@NotEmpty
 	String lastName;
-	@NotNull
+	@NotEmpty
 	String mobileNumber;
-	@NotNull
+	@NotEmpty
 	String emailId;
-
+	@Column(nullable = false)
+	@Type(type = "org.hibernate.type.NumericBooleanType")
+	boolean  saveVerificationFlag=false;
+	
+	
 	private static Registration registration;
 	/**
 	 * @return the channelId
@@ -209,4 +217,49 @@ public class Registration {
 	/*static {
 		registration= new Registration();
 	}*/
-}
+
+	public boolean isSaveVerificationFlag() {
+		return saveVerificationFlag;
+	}
+
+	public void setSaveVerificationFlag(boolean saveVerificationFlag) {
+		this.saveVerificationFlag = saveVerificationFlag;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @return the registration
+	 */
+	public static Registration getRegistration() {
+		return registration;
+	}
+
+	/**
+	 * @param registration the registration to set
+	 */
+	public static void setRegistration(Registration registration) {
+		Registration.registration = registration;
+	}
+
+	/**
+	 * @param birthDate the birthDate to set
+	 */
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+
+	}

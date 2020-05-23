@@ -1,1 +1,4 @@
 mvn -Dmaven.test.skip=true package
+
+http://localhost:5000/mycartreg/registration
+http://localhost:5000/otp

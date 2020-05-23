@@ -13,10 +13,15 @@ public class MyRegistrationService {
 
 	@Autowired
 	MyRegistrationRepo myRegistrationRepo;
+	
 
 	public Optional<Registration> save(Registration registration) {
 		return myRegistrationRepo.saveAndFlush(registration);
 
+	}
+	
+	public void saveVerificationFlag(boolean flag,String emailId) {
+		 myRegistrationRepo.saveVerificationFlag(flag,emailId);
 	}
 
 }

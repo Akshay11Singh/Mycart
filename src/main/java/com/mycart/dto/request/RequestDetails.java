@@ -2,6 +2,9 @@ package com.mycart.dto.request;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -11,15 +14,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Component
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestDetails {
-	@JsonProperty("FirstName")
+	@JsonProperty("firstname")
+	@NotEmpty
 	String firstName;
-	@JsonProperty("LastName")
+	@JsonProperty("lastname")
+	@NotEmpty
 	String lastName;
-	@JsonProperty("MobileNumber")
+	@JsonProperty("mobilenumber")
+	@NotEmpty
 	String mobileNumber;
-	@JsonProperty("EmailID")
+	@JsonProperty("emailid")
+	@NotEmpty
 	String emailId;
-	@JsonProperty("BirthDate")
+	@JsonProperty("birthdate")
+	@NotEmpty
 	Date birthDate;
 	
 	/**

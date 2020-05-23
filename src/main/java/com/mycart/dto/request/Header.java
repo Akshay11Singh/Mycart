@@ -2,17 +2,22 @@ package com.mycart.dto.request;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Component
 public class Header {
-	@JsonProperty("ChannelId")
+	@JsonProperty("channelid")
+	@NotEmpty
 	String channelId;
-	@JsonProperty("Timestamp")
+	@JsonProperty("timestamp")
+	@NotEmpty
 	Date timeStamp;
-	@JsonProperty("ServiceProvider")
+	@JsonProperty("serviceprovider")
+	@NotEmpty
 	String serviceProvider;
 
 	protected Header() {

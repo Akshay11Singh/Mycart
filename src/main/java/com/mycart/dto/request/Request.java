@@ -1,5 +1,7 @@
 package com.mycart.dto.request;
 
+import javax.validation.constraints.NotEmpty;
+
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -9,9 +11,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Request {
 
-	@JsonProperty("RequestType")
+	@JsonProperty("requestType")
+	@NotEmpty
 	String requestType;
-	@JsonProperty("UserType")
+	@JsonProperty("usertype")
+	@NotEmpty
 	String userType;
 	
 
