@@ -137,8 +137,6 @@ public class MyRegistrationController {
 
 	@GetMapping("/registration")
 	public String registration() {
-
 		return "my registraion is called!!";
-
 	}
 }

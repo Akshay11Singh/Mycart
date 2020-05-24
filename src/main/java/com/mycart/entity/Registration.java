@@ -42,6 +42,8 @@ public class Registration {
 	@Column(nullable = false)
 	@Type(type = "org.hibernate.type.NumericBooleanType")
 	boolean  saveVerificationFlag=false;
+	@NotNull
+	String otp;
 	
 	
 	private static Registration registration;
@@ -259,6 +261,20 @@ public class Registration {
 	 */
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
+	}
+
+	/**
+	 * @return the otp
+	 */
+	public String getOtp() {
+		return otp;
+	}
+
+	/**
+	 * @param otp the otp to set
+	 */
+	public void setOtp(String otp) {
+		this.otp = otp;
 	}
 
 

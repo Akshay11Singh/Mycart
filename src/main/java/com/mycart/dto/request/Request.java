@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Request {
 
-	@JsonProperty("requestType")
+	@JsonProperty("requesttype")
 	@NotEmpty
 	String requestType;
 	@JsonProperty("usertype")

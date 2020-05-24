@@ -47,21 +47,22 @@ public class MyCartOtpGeneration {
 		  json.getString("otp");
 		 */
 		String otpToCheck = (String) request.getSession().getAttribute("sessionotp");
-		if (otp.equals(otpToCheck)) {
+		System.out.println(" sessionotp." +otpToCheck);
+		System.out.println(" otp" +otp);
+		if (otp.trim().equals(otpToCheck.trim())) {
 			same = otpToCheck;
 			response.setResponseType("Success");
 			responseDetails.setMessage("OTP verified successfully!!");
 			registrationMapper.setResponse(response);
 			registrationMapper.setResponseDetails(responseDetails);
 			myRegistrationRepo.saveVerificationFlag(true,(String)request.getSession().getAttribute("sessionemail"));
-			request.setAttribute("same", same + " " + response.getResponseType() + " " + responseDetails.getMessage());
+			//request.setAttribute("same", same + " " + response.getResponseType() + " " + responseDetails.getMessage());
 
 		} else {
 			response.setResponseType("Failed");
 			responseDetails.setMessage("Otp Verification failed!!");
 			registrationMapper.setResponse(response);
 			registrationMapper.setResponseDetails(responseDetails);
-
 		}
 
 		return ResponseEntity.status(HttpStatus.OK).body(registrationMapper);
