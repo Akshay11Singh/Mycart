@@ -27,10 +27,8 @@ public class MyCartLoginController {
 	RequestDetails requestDetails;
 	@Autowired
 	RegistrationMapper registrationMapper;
-
 	@Autowired
 	MyLoginControllerService myLoginControllerService;
-
 	@Autowired
 	Response response;
 	@Autowired

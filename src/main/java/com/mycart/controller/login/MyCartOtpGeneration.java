@@ -1,6 +1,7 @@
 package com.mycart.controller.login;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +47,8 @@ public class MyCartOtpGeneration {
 		  json = new JSONObject(otp); mapper = new ObjectMapper(); otp =
 		  json.getString("otp");
 		 */
-		String otpToCheck = (String) request.getSession().getAttribute("sessionotp");
+		HttpSession session = request.getSession(true);
+		String otpToCheck = (String) session.getAttribute("sessionotp");
 		System.out.println(" sessionotp." +otpToCheck);
 		System.out.println(" otp" +otp);
 		if (otp.trim().equals(otpToCheck.trim())) {
@@ -81,6 +83,8 @@ public class MyCartOtpGeneration {
 				request.getSession().setAttribute("sessionotp", otp);
 				request.getSession().setAttribute("sessionemail", email);
 				request.getSession().setAttribute("sessionmobileno", mobileNo);
+				request.getSession().setAttribute("sessionid", request.getSession().getId());
+				
 				response.setResponseType("Success");
 				responseDetails.setMessage("Otp Sent on registered email id");
 				registrationMapper.setResponse(response);
