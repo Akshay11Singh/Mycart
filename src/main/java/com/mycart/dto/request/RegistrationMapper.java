@@ -62,5 +62,8 @@ public class RegistrationMapper{
 	public void setResponseDetails(ResponseDetails responseDetails) {
 		this.responseDetails = responseDetails;
 	}
+	/**
+	 * @return the sessionId
+	 */
 	
 }

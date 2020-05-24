@@ -19,6 +19,7 @@ import com.mycart.dto.request.Response;
 import com.mycart.dto.request.ResponseDetails;
 import com.mycart.repository.MyRegistrationRepo;
 import com.mycart.service.MyCartOtp;
+import com.mycart.service.MyLoginControllerService;
 import com.mycart.utils.MailUtility;
 
 @Controller
@@ -39,25 +40,33 @@ public class MyCartOtpGeneration {
 	@Autowired
 	MyRegistrationRepo myRegistrationRepo;
 	
+	@Autowired
+	MyLoginControllerService myLoginControllerService;
+	String otp = "";
+	String otpToCheck ="";
 	@PostMapping("/otp")
-	public ResponseEntity<RegistrationMapper> getOtp(HttpServletRequest request, @RequestParam("otp") String otp) {
+	public ResponseEntity<RegistrationMapper> getOtp(HttpServletRequest request, @RequestParam("otp") String otp,@RequestParam(name = "email") String email, @RequestParam(name = "mobileno") String mobileNo) {
 	//public String getOtp(HttpServletRequest request, @RequestParam("otp") String otp) {
 		String same = "";
 		/*
 		  json = new JSONObject(otp); mapper = new ObjectMapper(); otp =
 		  json.getString("otp");
 		 */
-		HttpSession session = request.getSession(true);
-		String otpToCheck = (String) session.getAttribute("sessionotp");
+		//String otpToCheck = (String) request.getSession().getAttribute("sessionotp");
 		System.out.println(" sessionotp." +otpToCheck);
 		System.out.println(" otp" +otp);
+		if(!email.equals("") && email != null || (!mobileNo.equals("") && mobileNo != null)) {
+			myLoginControllerService.findByEmailId(email).ifPresent(obj->{
+				otpToCheck=obj.getOtp();
+			});
+		}
 		if (otp.trim().equals(otpToCheck.trim())) {
-			same = otpToCheck;
+			
 			response.setResponseType("Success");
 			responseDetails.setMessage("OTP verified successfully!!");
 			registrationMapper.setResponse(response);
 			registrationMapper.setResponseDetails(responseDetails);
-			myRegistrationRepo.saveVerificationFlag(true,(String)request.getSession().getAttribute("sessionemail"));
+			myRegistrationRepo.saveVerificationFlag(true,email);
 			//request.setAttribute("same", same + " " + response.getResponseType() + " " + responseDetails.getMessage());
 
 		} else {
@@ -74,9 +83,9 @@ public class MyCartOtpGeneration {
 	@GetMapping("/otp")
 	public ResponseEntity<RegistrationMapper> generateotp(HttpServletRequest request,@RequestParam(name = "email") String email, @RequestParam(name = "mobileno") String mobileNo) {
 	// public String generateotp(HttpServletRequest request, @RequestParam(name="email") String email, @RequestParam(name="mobileno") String mobileNo) {
-		String otp = "";
+		
 		try {
-			if (!email.equals("") && email != null || (!mobileNo.equals("") && mobileNo != null)) {
+				if (!email.equals("") && email != null || (!mobileNo.equals("") && mobileNo != null)) {
 				otp = String.valueOf(myCartOtp.generateOTP());
 				otp = otp.substring(otp.length() - 4, otp.length());
 				JSONObject jsonObject = new JSONObject();
@@ -89,6 +98,11 @@ public class MyCartOtpGeneration {
 				responseDetails.setMessage("Otp Sent on registered email id");
 				registrationMapper.setResponse(response);
 				registrationMapper.setResponseDetails(responseDetails);
+				myLoginControllerService.findByEmailId(email).ifPresent(obj->{
+					myRegistrationRepo.saveOtp(otp, email);
+				});
+			
+				System.out.println("request.getSession().getId()  "+request.getSession().getId());
 				MailUtility.send("jaimatadi11singh@gmail.com", "oazlngnzuyalagwq", email, "OTP Verification Mail From Mycart", otp);
 
 			} else {
